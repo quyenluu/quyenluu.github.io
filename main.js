@@ -1,5 +1,6 @@
 const socket = io("https://serverpeerjs.herokuapp.com/");
 //const socket = io('https://stream3005.herokuapp.com/');
+//const socket = io('http://mypeer3005.herokuapp.com/');
 $("#div-chat").hide();
 
 let customConfig;
