@@ -1,6 +1,25 @@
 const socket = io("https://serverpeerjs.herokuapp.com/");
-
+//const socket = io('https://stream3005.herokuapp.com/');
 $("#div-chat").hide();
+
+let customConfig;
+$.ajax({
+  url: "https://service.xirsys.com/ice",
+  data: {
+    ident: "quyenluu",
+    secret: "418169ba-4dec-11e7-baee-bf0f41d2b90c",
+    domain: "quyenluu.github.io",
+    application: "default",
+    room: "default",
+    secure: 1
+  },
+  success: function (data, status) {
+    // data.d is where the iceServers object lives
+    customConfig = data.d;
+    console.log(customConfig);
+  },
+  async: false
+});
 
 socket.on('DANH_SACH_ONLINE', arrUserInfo => {
     $("#div-chat").show();
@@ -41,7 +60,13 @@ function playStream(idVideoTag, stream){
 // openStream()
 // .then(stream => playStream("localStream", stream));
 
-const peer = new Peer({key: 'peerjs', host: 'serverpeerjs.herokuapp.com', secure: true, port: 443});
+const peer = new Peer({
+    key: 'peerjs', 
+    host: 'serverpeerjs.herokuapp.com', 
+    secure: true, 
+    port: 443, 
+    config: customConfig
+});
 
 peer.on("open", id => {
     $("#my-peer").append(id);
